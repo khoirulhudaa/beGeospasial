@@ -1,4 +1,5 @@
 const titleModel = require('../models/titleModel')
+const coordinateModel = require('../models/coordinateCustomModel')
 const crypto = require('crypto')
 
 const createCoordinate = async (req, res) => {
@@ -27,6 +28,38 @@ const createCoordinate = async (req, res) => {
             existTitle.coordinate.push(dataCoordinate);
             await existTitle.save();
             return res.json({ status: 200, message: 'Berhasil tambah dinas!' });
+        } else {
+            return res.json({ status: 500, message: 'Lokasi sudah pernah dibuat!' })
+        }
+
+    } catch (error) {
+        return res.json({ status: 500, message: 'Proses gagal!', error: error });
+    }
+}
+
+const createCustomCoordinate = async (req, res) => {
+    try {
+        const { name, title_id, type_area, type_danger, color, coordinates } = req.body
+
+        const tokenRandom = crypto.randomBytes(5).toString('hex')
+
+        const dataCoordinate = {
+            coordinate_id: tokenRandom,
+            name,
+            title_id,
+            type_area,
+            type_danger,
+            color,
+            coordinates,
+        }
+
+        console.log(dataCoordinate)
+        
+        const existCoordinate = await coordinateModel.findOne({ title_id, name })
+        if (!existCoordinate) {
+            const newCoordinate = new coordinateModel(dataCoordinate)
+            await newCoordinate.save();
+            return res.json({ status: 200, message: 'Berhasil tambah data!' });
         } else {
             return res.json({ status: 500, message: 'Lokasi sudah pernah dibuat!' })
         }
@@ -121,5 +154,6 @@ module.exports = {
     createCoordinate,
     updateCoordinate,
     removeCoordinate,
-    checkCoordinate
+    checkCoordinate,
+    createCustomCoordinate
 }
