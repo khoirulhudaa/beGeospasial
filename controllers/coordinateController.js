@@ -39,8 +39,8 @@ const createCoordinate = async (req, res) => {
 
 const createCustomCoordinate = async (req, res) => {
     try {
-        const { name, title_id, type_area, type_danger, color, coordinates } = req.body
-
+        const { name, title_id, type_area, wide, typeWide, description, type_danger, color, coordinates } = req.body
+        console.log(req.body)
         const tokenRandom = crypto.randomBytes(5).toString('hex')
 
         const dataCoordinate = {
@@ -48,6 +48,9 @@ const createCustomCoordinate = async (req, res) => {
             name,
             title_id,
             type_area,
+            wide,
+            description,
+            typeWide,   
             type_danger,
             color,
             coordinates,

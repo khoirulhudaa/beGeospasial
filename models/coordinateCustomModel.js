@@ -17,7 +17,19 @@ const coordinateModel = new mongoose.Schema({
         type: Array,
         required: true
     },
+    wide: {
+        type: Number,
+        default: 0
+    },
+    typeWide: {
+        type: String,
+        default: '-'
+    },
     type_area: {
+        type: String,
+        required: true
+    },
+    description: {
         type: String,
         required: true
     },
