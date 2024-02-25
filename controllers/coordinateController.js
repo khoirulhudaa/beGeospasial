@@ -72,6 +72,20 @@ const createCustomCoordinate = async (req, res) => {
     }
 }
 
+const getAllCustomByTitle = async (req, res) => {
+    try {
+        const { title_id } = req.params
+
+        const existCoordinate = await coordinateModel.find({ title_id })
+        if(!coordinateModel) return res.json({ status: 404, message: 'Data coordinate belum ada!' })
+
+        return res.json({ status: 200, message: 'Berhasil ambil data koordinate kustom', data: existCoordinate })
+
+    } catch (error) {
+        return res.json({ status: 500, message: 'Proses gagal!', error: error });
+    }
+}
+
 const checkCoordinate = async (req, res) => {
     try {
         const { name_location, title_id } = req.body
@@ -158,5 +172,6 @@ module.exports = {
     updateCoordinate,
     removeCoordinate,
     checkCoordinate,
-    createCustomCoordinate
+    createCustomCoordinate,
+    getAllCustomByTitle
 }
