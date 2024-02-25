@@ -109,6 +109,22 @@ const checkCoordinate = async (req, res) => {
     }
 }
 
+
+const removeCoordinateCustom = async (req, res) => {
+    try {
+       
+        const { coordinate_id } = req.params
+
+        const existCoordinate = await coordinateModel.findOneAndDelete({ coordinate_id })
+        if(!existCoordinate) return res.json({ status: 404, message: 'Koordinat tidak ada!' })
+        
+        return res.json({ status: 200, message: 'Berhasil hapus koordinat!', data: existCoordinate })
+
+    } catch (error) {
+        return res.json({ status: 500, message: 'Proses gagal!', error: error });
+    }
+}
+
 const removeCoordinate = async (req, res) => {
     try {
 
@@ -173,5 +189,6 @@ module.exports = {
     removeCoordinate,
     checkCoordinate,
     createCustomCoordinate,
-    getAllCustomByTitle
+    getAllCustomByTitle,
+    removeCoordinateCustom
 }
