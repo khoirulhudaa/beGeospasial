@@ -48,6 +48,12 @@ app.use('/title', checkToken, titleRouter)
 app.use('/coordinate', checkToken, CoordinateRouter)
 app.use('/subdistrict', checkToken, SubdistrictRouter)
 
+// Public API
+app.use('/v2/dinas', dinasRouter)
+app.use('/v2/title', titleRouter)
+app.use('/v2/coordinate', CoordinateRouter)
+app.use('/v2/subdistrict', SubdistrictRouter)
+
 app.get('/test', (req, res) => {
     res.send('test success!')   
 })
