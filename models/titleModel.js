@@ -9,7 +9,27 @@ const titleModel = new mongoose.Schema({
         type: String,
         required: true
     },
+    name_dinas: {
+        type: String,
+        required: true
+    },
     title: {
+        type: String,
+        required: true
+    },
+    year: {
+        type: String,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true
+    },
+    type: {
         type: String,
         required: true
     },

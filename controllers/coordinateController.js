@@ -4,7 +4,7 @@ const crypto = require('crypto')
 
 const createCoordinate = async (req, res) => {
     try {
-        const { name_location, title_id, subdistrict, lat, long, link, note, condition } = req.body
+        const { name_location, title_id, thumbnail, subdistrict, lat, long, link, note, condition } = req.body
 
         const tokenRandom = crypto.randomBytes(5).toString('hex')
 
@@ -16,6 +16,7 @@ const createCoordinate = async (req, res) => {
             lat: parseFloat(lat),
             long: parseFloat(long),
             link,
+            thumbnail,
             condition
         }
 
@@ -145,8 +146,8 @@ const removeCoordinate = async (req, res) => {
 
 const updateCoordinate = async (req, res) => {
     try {
-        const { title_id, coordinate_id, name_location, subdistrict, lat, long, link, note, condition } = req.body;
-
+        const { title_id, coordinate_id, thumbnail, name_location, subdistrict, lat, long, link, note, condition } = req.body;
+ 
         const existingTitle = await titleModel.findOne({ title_id });
 
         if (!existingTitle) {
@@ -163,6 +164,7 @@ const updateCoordinate = async (req, res) => {
                     "coordinate.$[coordinateElement].lat": lat,
                     "coordinate.$[coordinateElement].long": long,
                     "coordinate.$[coordinateElement].link": link,
+                    "coordinate.$[coordinateElement].thumbnail": thumbnail,
                     "coordinate.$[coordinateElement].condition": condition
                 }
             },
