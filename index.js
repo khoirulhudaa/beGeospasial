@@ -62,7 +62,7 @@ app.use('/v2/subdistrict', SubdistrictRouter)
 // Open API
 app.use('/api-geospasial-cirebonkab/v1/kecamatan', API_SUBDISTRICT)
 app.use('/api-geospasial-cirebonkab/v1/dinas', API_DINAS)
-app.use('/api-geospasial-cirebonkab/v2/title', API_TITLE)
+app.use('/api-geospasial-cirebonkab/v1/title', API_TITLE)
     
 app.get('/test', (req, res) => {
     res.send('test success!')   
