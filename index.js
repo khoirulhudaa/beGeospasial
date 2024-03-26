@@ -49,10 +49,10 @@ app.use('/coordinate', checkToken, CoordinateRouter)
 app.use('/subdistrict', checkToken, SubdistrictRouter)
 
 // Public API
-app.use('/v2/api-geospasial-cirebonkab/dinas', dinasRouter)
-app.use('/v2/api-geospasial-cirebonkab/title', titleRouter)
-app.use('/v2/api-geospasial-cirebonkab/coordinate', CoordinateRouter)
-app.use('/v2/api-geospasial-cirebonkab/subdistrict', SubdistrictRouter)
+app.use('/v2/api/dinas', dinasRouter)
+app.use('/v2/api/judul-data', titleRouter)
+app.use('/v2/api/coordinate', CoordinateRouter)
+app.use('/v2/api/kecamatan', SubdistrictRouter)
     
 app.get('/test', (req, res) => {
     res.send('test success!')   
