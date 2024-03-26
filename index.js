@@ -41,6 +41,7 @@ const dinasRouter = require('./routers/dinasRouter')
 const titleRouter = require('./routers/titleRouter')
 const CoordinateRouter = require('./routers/coordinateRouter')
 const SubdistrictRouter = require('./routers/SubdistrictRouter')
+const ResponseRouter = require('./routers/responseRouter')
 
 app.use('/account', accountRouter)
 app.use('/dinas', checkToken, dinasRouter)
@@ -53,6 +54,7 @@ app.use('/v2/api/dinas', dinasRouter)
 app.use('/v2/api/judul-data', titleRouter)
 app.use('/v2/api/coordinate', CoordinateRouter)
 app.use('/v2/api/kecamatan', SubdistrictRouter)
+app.use('/v2/response-user', ResponseRouter)
     
 app.get('/test', (req, res) => {
     res.send('test success!')   
