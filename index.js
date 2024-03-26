@@ -42,11 +42,6 @@ const titleRouter = require('./routers/titleRouter')
 const CoordinateRouter = require('./routers/coordinateRouter')
 const SubdistrictRouter = require('./routers/SubdistrictRouter')
 
-// Router Open API
-const API_SUBDISTRICT = require('./routers/APISUBDISTRICTROUTER')
-const API_DINAS = require('./routers/APIDINASROUTER')
-const API_TITLE = require('./routers/APITITLEROUTER')
-
 app.use('/account', accountRouter)
 app.use('/dinas', checkToken, dinasRouter)
 app.use('/title', checkToken, titleRouter)
@@ -54,15 +49,10 @@ app.use('/coordinate', checkToken, CoordinateRouter)
 app.use('/subdistrict', checkToken, SubdistrictRouter)
 
 // Public API
-app.use('/v2/dinas', dinasRouter)
-app.use('/v2/title', titleRouter)
-app.use('/v2/coordinate', CoordinateRouter)
-app.use('/v2/subdistrict', SubdistrictRouter)
-
-// Open API
-app.use('/api-geospasial-cirebonkab/v1/kecamatan', API_SUBDISTRICT)
-app.use('/api-geospasial-cirebonkab/v1/dinas', API_DINAS)
-app.use('/api-geospasial-cirebonkab/v1/title', API_TITLE)
+app.use('/v2/api-geospasial-cirebonkab/dinas', dinasRouter)
+app.use('/v2/api-geospasial-cirebonkab/title', titleRouter)
+app.use('/v2/api-geospasial-cirebonkab/coordinate', CoordinateRouter)
+app.use('/v2/api-geospasial-cirebonkab/subdistrict', SubdistrictRouter)
     
 app.get('/test', (req, res) => {
     res.send('test success!')   
