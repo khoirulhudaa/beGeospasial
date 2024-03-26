@@ -54,7 +54,7 @@ app.use('/v2/api/dinas', dinasRouter)
 app.use('/v2/api/judul-data', titleRouter)
 app.use('/v2/api/coordinate', CoordinateRouter)
 app.use('/v2/api/kecamatan', SubdistrictRouter)
-app.use('/v2/response-user', ResponseRouter)
+app.use('/v2/api/response-user', ResponseRouter)
     
 app.get('/test', (req, res) => {
     res.send('test success!')   
