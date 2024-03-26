@@ -1,4 +1,3 @@
-const responseModel = require('../models/responseModel')
 const crypto = require('crypto')
 const responseModel = require('../models/responseModel')
 
