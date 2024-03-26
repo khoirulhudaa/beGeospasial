@@ -29,6 +29,10 @@ const titleModel = new mongoose.Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String, // Titik Koordinat, Polygon, Titik dan Polygon
+        required: true
+    },
     type: {
         type: String,
         required: true

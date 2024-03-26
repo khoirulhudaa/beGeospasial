@@ -3,7 +3,7 @@ const crypto = require('crypto')
 
 const createTitle = async (req, res) => {
     try {
-        const { title, dinas_id, description, coordinate, status, year, name_dinas, type } = req.body
+        const { title, dinas_id, category, description, coordinate, status, year, name_dinas, type } = req.body
        
         const existSubdistrict = await titleModel.findOne({ title: { $regex: new RegExp('^' + title + '$', 'i') } })
         if (existSubdistrict) return res.json({ status: 400, message: 'Kecataman sudah ada!' })
@@ -16,6 +16,7 @@ const createTitle = async (req, res) => {
             dinas_id,
             description,
             status,
+            category,
             year,
             name_dinas,
             type
@@ -67,12 +68,16 @@ const removeTitle = async (req, res) => {
 const updateTitle = async () => {
     try {
 
-        const { title_id, title } = req.body
+        const { title_id, title, category, type, description, year } = req.body
 
         const existTitle = await titleModel.findOne({ title_id })
         if(!existTitle) return res.json({ status: 404, message: 'Judul tidak ada!' })
 
         existTitle.title = title
+        existTitle.category = category
+        existTitle.type = type
+        existTitle.description = description
+        existTitle.year = year
         existTitle.save()
             
         return res.json({ status: 200, message: 'Berhasil perbarui judul!', data: existTitle })
