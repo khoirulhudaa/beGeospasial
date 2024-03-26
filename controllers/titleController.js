@@ -65,10 +65,10 @@ const removeTitle = async (req, res) => {
     }
 }
 
-const updateTitle = async () => {
+const updateTitle = async (req, res) => {
     try {
 
-        const { title_id, title, category, type, description, year } = req.body
+        const { title_id, title, category, type, status, description, year } = req.body
 
         const existTitle = await titleModel.findOne({ title_id })
         if(!existTitle) return res.json({ status: 404, message: 'Judul tidak ada!' })
@@ -78,6 +78,7 @@ const updateTitle = async () => {
         existTitle.type = type
         existTitle.description = description
         existTitle.year = year
+        existTitle.status = status
         existTitle.save()
             
         return res.json({ status: 200, message: 'Berhasil perbarui judul!', data: existTitle })
