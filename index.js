@@ -42,12 +42,14 @@ const titleRouter = require('./routers/titleRouter')
 const CoordinateRouter = require('./routers/coordinateRouter')
 const SubdistrictRouter = require('./routers/SubdistrictRouter')
 const ResponseRouter = require('./routers/responseRouter')
+const PolygonRouter = require('./routers/polygonRouter')
 
 app.use('/account', accountRouter)
 app.use('/dinas', checkToken, dinasRouter)
 app.use('/title', checkToken, titleRouter)
 app.use('/coordinate', checkToken, CoordinateRouter)
 app.use('/subdistrict', checkToken, SubdistrictRouter)
+app.use('/polygon', checkToken, PolygonRouter)
 
 // Public API
 app.use('/v2/api/dinas', dinasRouter)

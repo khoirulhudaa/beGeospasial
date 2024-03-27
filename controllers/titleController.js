@@ -3,15 +3,20 @@ const crypto = require('crypto')
 
 const createTitle = async (req, res) => {
     try {
-        const { title, dinas_id, category, description, coordinate, status, year, name_dinas, type } = req.body
-       
+        const { title, dinas_id, title_id, category, description, coordinate, status, year, name_dinas, type } = req.body
+        
+        if(title_id) {
+            console.log('data title_id:',title_id)
+        }
+        console.log('gak ada title_id', title_id)
+
         const existSubdistrict = await titleModel.findOne({ title: { $regex: new RegExp('^' + title + '$', 'i') } })
         if (existSubdistrict) return res.json({ status: 400, message: 'Kecataman sudah ada!' })
  
         const tokenRandom = crypto.randomBytes(5).toString('hex')
 
         const newtitleData = {
-            title_id: tokenRandom,
+            title_id: title_id ?? tokenRandom,
             title,
             dinas_id,
             description,
