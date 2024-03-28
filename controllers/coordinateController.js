@@ -4,7 +4,7 @@ const crypto = require('crypto')
 
 const createCoordinate = async (req, res) => {
     try {
-        const { name_location, title_id, thumbnail, subdistrict, lat, long, link, note, condition } = req.body
+        const { name_location, title_id, thumbnail, subdistrict, lat, long, address, link, note, condition } = req.body
 
         const tokenRandom = crypto.randomBytes(5).toString('hex')
 
@@ -15,6 +15,7 @@ const createCoordinate = async (req, res) => {
             subdistrict,
             lat: parseFloat(lat),
             long: parseFloat(long),
+            address,
             link,
             thumbnail,
             condition
