@@ -39,6 +39,126 @@ const createCoordinate = async (req, res) => {
     }
 }
 
+// const createCoordinateExcel = async (req, res) => {
+//     try {
+//         const coordinates = req.body;
+
+//         if (!Array.isArray(coordinates)) {
+//             return res.json({ status: 400, message: 'Data koordinat harus dalam bentuk array!' });
+//         }
+
+//         const requiredFields = ['name_location', 'title_id', 'thumbnail', 'subdistrict', 'lat', 'long', 'address', 'link', 'condition'];
+
+//         // Check if all required fields are present in each coordinate
+//         for (const coordinate of coordinates) {
+//             for (const field of requiredFields) {
+//                 if (!coordinate.hasOwnProperty(field)) {
+//                     return res.json({ status: 400, message: `Data koordinat tidak lengkap! Field '${field}' tidak ditemukan.` });
+//                 }
+//             }
+//         }
+
+//         const existTitle = await titleModel.findOne({ title_id: coordinates[0].title_id });
+//         if (!existTitle) {
+//             return res.json({ status: 404, message: 'Judul geospasial tidak ada!' });
+//         }
+
+//         const newCoordinates = [];
+//         for (const coordinate of coordinates) {
+//             const { name_location, title_id, thumbnail, subdistrict, lat, long, address, link, condition } = coordinate;
+
+//             const tokenRandom = crypto.randomBytes(5).toString('hex');
+
+//             const dataCoordinate = {
+//                 coordinate_id: tokenRandom,
+//                 name_location,
+//                 title_id,
+//                 subdistrict,
+//                 lat: parseFloat(lat),
+//                 long: parseFloat(long),
+//                 address,
+//                 link,
+//                 thumbnail,
+//                 condition
+//             };
+
+//             console.log(dataCoordinate);
+
+//             if (!existTitle.coordinate.some((data) => data.name_location === name_location)) {
+//                 newCoordinates.push(dataCoordinate);
+//             }
+//         }
+
+//         existTitle.coordinate.push(...newCoordinates);
+//         await existTitle.save();
+
+//         return res.json({ status: 200, message: 'Berhasil tambah dinas!', newCoordinates });
+//     } catch (error) {
+//         return res.json({ status: 500, message: 'Proses gagal!', error: error });
+//     }
+// };
+
+const createCoordinateExcel = async (req, res) => {
+    try {
+        const coordinates = req.body;
+
+        if (!Array.isArray(coordinates)) {
+            return res.json({ status: 400, message: 'Data koordinat harus dalam bentuk array!' });
+        }
+
+        const requiredFields = ['name_location', 'title_id', 'thumbnail', 'subdistrict', 'lat', 'long', 'address', 'link', 'condition'];
+
+        for (const coordinate of coordinates) {
+            for (const field of requiredFields) {
+                if (!coordinate.hasOwnProperty(field)) {
+                    return res.json({ status: 400, message: `Data koordinat tidak lengkap! Field '${field}' tidak ditemukan.` });
+                }
+            }
+        }
+
+        const existTitle = await titleModel.findOne({ title_id: coordinates[0].title_id });
+        if (!existTitle) {
+            return res.json({ status: 404, message: 'Judul geospasial tidak ada!' });
+        }
+
+        const nameLocationTracker = {};
+        const newCoordinates = [];
+
+        for (const coordinate of coordinates) {
+            const { name_location, title_id, thumbnail, subdistrict, lat, long, address, link, condition } = coordinate;
+
+            // Check if the name_location has already been processed
+            if (!nameLocationTracker[name_location]) {
+                const tokenRandom = crypto.randomBytes(5).toString('hex');
+
+                const dataCoordinate = {
+                    coordinate_id: tokenRandom,
+                    name_location,
+                    title_id,
+                    subdistrict,
+                    lat: parseFloat(lat),
+                    long: parseFloat(long),
+                    address,
+                    link,
+                    thumbnail,
+                    condition
+                };
+
+                newCoordinates.push(dataCoordinate);
+                nameLocationTracker[name_location] = true; // Mark this name_location as processed
+            }
+        }
+
+        existTitle.coordinate.push(...newCoordinates);
+        await existTitle.save();
+
+        return res.json({ status: 200, message: 'Berhasil tambah dinas!', newCoordinates });
+    } catch (error) {
+        return res.json({ status: 500, message: 'Proses gagal!', error: error });
+    }
+};
+
+
 const createCustomCoordinate = async (req, res) => {
     try {
         const { name, title_id, type_area, wide, typeWide, description, type_danger, color, coordinates } = req.body
@@ -147,7 +267,7 @@ const removeCoordinate = async (req, res) => {
 
 const updateCoordinate = async (req, res) => {
     try {
-        const { title_id, coordinate_id, thumbnail, name_location, subdistrict, lat, long, link, note, condition } = req.body;
+        const { title_id, coordinate_id, thumbnail, name_location, subdistrict, lat, long, link, condition } = req.body;
  
         const existingTitle = await titleModel.findOne({ title_id });
 
@@ -188,6 +308,7 @@ const updateCoordinate = async (req, res) => {
 
 module.exports = {
     createCoordinate,
+    createCoordinateExcel,
     updateCoordinate,
     removeCoordinate,
     checkCoordinate,
