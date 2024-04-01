@@ -10,8 +10,8 @@ const createTitle = async (req, res) => {
         }
         console.log('gak ada title_id', title_id)
 
-        const existSubdistrict = await titleModel.findOne({ title: { $regex: new RegExp('^' + title + '$', 'i') } })
-        if (existSubdistrict) return res.json({ status: 400, message: 'Kecataman sudah ada!' })
+        // const existSubdistrict = await titleModel.findOne({ title: { $regex: new RegExp('^' + title + '$', 'i') } })
+        // if (existSubdistrict) return res.json({ status: 400, message: 'Judul sudah ada!' })
  
         const tokenRandom = crypto.randomBytes(5).toString('hex')
 
