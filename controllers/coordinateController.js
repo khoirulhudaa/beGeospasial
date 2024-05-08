@@ -4,7 +4,30 @@ const crypto = require('crypto')
 
 const createCoordinate = async (req, res) => {
     try {
-        const { name_location, title_id, thumbnail, subdistrict, lat, long, address, link, note, condition } = req.body
+        const { 
+            name_location, 
+            title_id, 
+            thumbnail, 
+            subdistrict, 
+            lat, 
+            long, 
+            address, 
+            link, 
+            condition, 
+            scale, 
+            remark,
+            code,
+            pum,
+            province,
+            typeArea,
+            ward,
+            provinceCode,
+            typeAreaCode, 
+            subdistrictCode,
+            wardCode,
+            wide,
+            source 
+        } = req.body
 
         const tokenRandom = crypto.randomBytes(5).toString('hex')
 
@@ -18,7 +41,20 @@ const createCoordinate = async (req, res) => {
             address,
             link,
             thumbnail,
-            condition
+            condition,
+            scale, 
+            remark,
+            code,
+            pum,
+            province,
+            typeArea,
+            ward,
+            provinceCode,
+            typeAreaCode, 
+            subdistrictCode,
+            wardCode,
+            wide,
+            source
         }
 
         console.log(dataCoordinate)
@@ -38,65 +74,6 @@ const createCoordinate = async (req, res) => {
         return res.json({ status: 500, message: 'Proses gagal!', error: error });
     }
 }
-
-// const createCoordinateExcel = async (req, res) => {
-//     try {
-//         const coordinates = req.body;
-
-//         if (!Array.isArray(coordinates)) {
-//             return res.json({ status: 400, message: 'Data koordinat harus dalam bentuk array!' });
-//         }
-
-//         const requiredFields = ['name_location', 'title_id', 'thumbnail', 'subdistrict', 'lat', 'long', 'address', 'link', 'condition'];
-
-//         // Check if all required fields are present in each coordinate
-//         for (const coordinate of coordinates) {
-//             for (const field of requiredFields) {
-//                 if (!coordinate.hasOwnProperty(field)) {
-//                     return res.json({ status: 400, message: `Data koordinat tidak lengkap! Field '${field}' tidak ditemukan.` });
-//                 }
-//             }
-//         }
-
-//         const existTitle = await titleModel.findOne({ title_id: coordinates[0].title_id });
-//         if (!existTitle) {
-//             return res.json({ status: 404, message: 'Judul geospasial tidak ada!' });
-//         }
-
-//         const newCoordinates = [];
-//         for (const coordinate of coordinates) {
-//             const { name_location, title_id, thumbnail, subdistrict, lat, long, address, link, condition } = coordinate;
-
-//             const tokenRandom = crypto.randomBytes(5).toString('hex');
-
-//             const dataCoordinate = {
-//                 coordinate_id: tokenRandom,
-//                 name_location,
-//                 title_id,
-//                 subdistrict,
-//                 lat: parseFloat(lat),
-//                 long: parseFloat(long),
-//                 address,
-//                 link,
-//                 thumbnail,
-//                 condition
-//             };
-
-//             console.log(dataCoordinate);
-
-//             if (!existTitle.coordinate.some((data) => data.name_location === name_location)) {
-//                 newCoordinates.push(dataCoordinate);
-//             }
-//         }
-
-//         existTitle.coordinate.push(...newCoordinates);
-//         await existTitle.save();
-
-//         return res.json({ status: 200, message: 'Berhasil tambah dinas!', newCoordinates });
-//     } catch (error) {
-//         return res.json({ status: 500, message: 'Proses gagal!', error: error });
-//     }
-// };
 
 const createCoordinateExcel = async (req, res) => {
     try {
@@ -125,7 +102,30 @@ const createCoordinateExcel = async (req, res) => {
         const newCoordinates = [];
 
         for (const coordinate of coordinates) {
-            const { name_location, title_id, thumbnail, subdistrict, lat, long, address, link, condition } = coordinate;
+            const { 
+                name_location, 
+                title_id, 
+                thumbnail, 
+                subdistrict, 
+                lat, 
+                long, 
+                address, 
+                link, 
+                condition ,
+                scale, 
+                remark,
+                code,
+                pum,
+                province,
+                typeArea,
+                ward,
+                provinceCode,
+                typeAreaCode, 
+                subdistrictCode,
+                wardCode,
+                wide,
+                source
+            } = coordinate;
 
             // Check if the name_location has already been processed
             if (!nameLocationTracker[name_location]) {
@@ -141,7 +141,20 @@ const createCoordinateExcel = async (req, res) => {
                     address,
                     link,
                     thumbnail,
-                    condition
+                    condition,
+                    scale, 
+                    remark,
+                    code,
+                    pum,
+                    province,
+                    typeArea,
+                    ward,
+                    provinceCode,
+                    typeAreaCode, 
+                    subdistrictCode,
+                    wardCode,
+                    wide,
+                    source
                 };
 
                 newCoordinates.push(dataCoordinate);
@@ -267,7 +280,30 @@ const removeCoordinate = async (req, res) => {
 
 const updateCoordinate = async (req, res) => {
     try {
-        const { title_id, coordinate_id, thumbnail, name_location, subdistrict, lat, long, link, condition } = req.body;
+        const { 
+            name_location, 
+            title_id, 
+            thumbnail, 
+            subdistrict, 
+            lat, 
+            long, 
+            address, 
+            link, 
+            condition,
+            scale, 
+            remark,
+            code,
+            pum,
+            province,
+            typeArea,
+            ward,
+            provinceCode,
+            typeAreaCode, 
+            subdistrictCode,
+            wardCode,
+            wide,
+            source
+        } = req.body;
  
         const existingTitle = await titleModel.findOne({ title_id });
 
@@ -286,7 +322,21 @@ const updateCoordinate = async (req, res) => {
                     "coordinate.$[coordinateElement].long": long,
                     "coordinate.$[coordinateElement].link": link,
                     "coordinate.$[coordinateElement].thumbnail": thumbnail,
-                    "coordinate.$[coordinateElement].condition": condition
+                    "coordinate.$[coordinateElement].condition": condition,
+                    "coordinate.$[coordinateElement].scale,": scale, 
+                    "coordinate.$[coordinateElement].remark": remark,
+                    "coordinate.$[coordinateElement].code": code,
+                    "coordinate.$[coordinateElement].address": address,
+                    "coordinate.$[coordinateElement].pum": pum,
+                    "coordinate.$[coordinateElement].province": province,
+                    "coordinate.$[coordinateElement].typeArea": typeArea,
+                    "coordinate.$[coordinateElement].ward": ward,
+                    "coordinate.$[coordinateElement].provinceCode": provinceCode,
+                    "coordinate.$[coordinateElement].typeAreaCode,": typeAreaCode, 
+                    "coordinate.$[coordinateElement].subdistrictCode": subdistrictCode,
+                    "coordinate.$[coordinateElement].wardCode": wardCode,
+                    "coordinate.$[coordinateElement].wide": wide,
+                    "coordinate.$[coordinateElement].source": source,
                 }
             },
             {
