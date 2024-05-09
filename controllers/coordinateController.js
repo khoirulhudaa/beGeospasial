@@ -314,36 +314,42 @@ const updateCoordinate = async (req, res) => {
         }
 
         // Gunakan operator posisional untuk memperbarui elemen dalam array
+        const updateFields = {
+            "coordinate.$[coordinateElement].name_location": name_location,
+            "coordinate.$[coordinateElement].subdistrict": subdistrict,
+            "coordinate.$[coordinateElement].lat": lat,
+            "coordinate.$[coordinateElement].long": long,
+            "coordinate.$[coordinateElement].link": link,
+            "coordinate.$[coordinateElement].thumbnail": thumbnail,
+            "coordinate.$[coordinateElement].scale": scale, 
+            "coordinate.$[coordinateElement].remark": remark,
+            "coordinate.$[coordinateElement].code": code,
+            "coordinate.$[coordinateElement].address": address,
+            "coordinate.$[coordinateElement].pum": pum,
+            "coordinate.$[coordinateElement].province": province,
+            "coordinate.$[coordinateElement].typeArea": typeArea,
+            "coordinate.$[coordinateElement].ward": ward,
+            "coordinate.$[coordinateElement].provinceCode": provinceCode,
+            "coordinate.$[coordinateElement].typeAreaCode": typeAreaCode, 
+            "coordinate.$[coordinateElement].subdistrictCode": subdistrictCode,
+            "coordinate.$[coordinateElement].wardCode": wardCode,
+            "coordinate.$[coordinateElement].wide": wide,
+            "coordinate.$[coordinateElement].source": source,
+        };
+
+        // Hanya tambahkan kondisi jika condition tidak undefined
+        if (condition !== undefined) {
+            updateFields["coordinate.$[coordinateElement].condition"] = condition;
+        }
+
         const result = await titleModel.updateOne(
             { title_id },
             {
-                $set: {
-                    "coordinate.$[coordinateElement].name_location": name_location,
-                    "coordinate.$[coordinateElement].subdistrict": subdistrict,
-                    "coordinate.$[coordinateElement].lat": lat,
-                    "coordinate.$[coordinateElement].long": long,
-                    "coordinate.$[coordinateElement].link": link,
-                    "coordinate.$[coordinateElement].thumbnail": thumbnail,
-                    "coordinate.$[coordinateElement].condition": condition,
-                    "coordinate.$[coordinateElement].scale": scale, 
-                    "coordinate.$[coordinateElement].remark": remark,
-                    "coordinate.$[coordinateElement].code": code,
-                    "coordinate.$[coordinateElement].address": address,
-                    "coordinate.$[coordinateElement].pum": pum,
-                    "coordinate.$[coordinateElement].province": province,
-                    "coordinate.$[coordinateElement].typeArea": typeArea,
-                    "coordinate.$[coordinateElement].ward": ward,
-                    "coordinate.$[coordinateElement].provinceCode": provinceCode,
-                    "coordinate.$[coordinateElement].typeAreaCode": typeAreaCode, 
-                    "coordinate.$[coordinateElement].subdistrictCode": subdistrictCode,
-                    "coordinate.$[coordinateElement].wardCode": wardCode,
-                    "coordinate.$[coordinateElement].wide": wide,
-                    "coordinate.$[coordinateElement].source": source,
-                }
+                $set: updateFields
             },
             {
                 arrayFilters: [{ "coordinateElement.coordinate_id": coordinate_id }],
-                new: true // Mengembalikan dokumen yang telah diperbarui
+                new: true 
             }
         );
 
