@@ -280,11 +280,13 @@ const removeCoordinate = async (req, res) => {
 
 const updateCoordinate = async (req, res) => {
     try {
+        console.log(req.body)
         const { 
             name_location, 
             title_id, 
             thumbnail, 
             subdistrict, 
+            coordinate_id,
             lat, 
             long, 
             address, 
@@ -323,7 +325,7 @@ const updateCoordinate = async (req, res) => {
                     "coordinate.$[coordinateElement].link": link,
                     "coordinate.$[coordinateElement].thumbnail": thumbnail,
                     "coordinate.$[coordinateElement].condition": condition,
-                    "coordinate.$[coordinateElement].scale,": scale, 
+                    "coordinate.$[coordinateElement].scale": scale, 
                     "coordinate.$[coordinateElement].remark": remark,
                     "coordinate.$[coordinateElement].code": code,
                     "coordinate.$[coordinateElement].address": address,
@@ -332,7 +334,7 @@ const updateCoordinate = async (req, res) => {
                     "coordinate.$[coordinateElement].typeArea": typeArea,
                     "coordinate.$[coordinateElement].ward": ward,
                     "coordinate.$[coordinateElement].provinceCode": provinceCode,
-                    "coordinate.$[coordinateElement].typeAreaCode,": typeAreaCode, 
+                    "coordinate.$[coordinateElement].typeAreaCode": typeAreaCode, 
                     "coordinate.$[coordinateElement].subdistrictCode": subdistrictCode,
                     "coordinate.$[coordinateElement].wardCode": wardCode,
                     "coordinate.$[coordinateElement].wide": wide,
