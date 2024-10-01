@@ -47,4 +47,4 @@ const coordinateModel = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('coordinate', coordinateModel)
+module.exports = mongoose.model('polygon', coordinateModel)

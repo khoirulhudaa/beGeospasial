@@ -44,4 +44,4 @@ const titleModel = new mongoose.Schema({
     },
 })
 
-module.exports = mongoose.model('title', titleModel)
+module.exports = mongoose.model('titleAndCoordinate', titleModel)
