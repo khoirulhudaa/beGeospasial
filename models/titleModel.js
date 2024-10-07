@@ -30,10 +30,9 @@ const titleModel = new mongoose.Schema({
         required: true
     },
     category: {
-        type: String, // Titik Koordinat, Polygon, Titik dan Polygon
+        type: String,
         required: true
     },
-    // name_location, kecataman, lat, long, link google map, catatan, condition
     coordinate: {
         type: Array,
         default: []

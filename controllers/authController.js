@@ -11,7 +11,7 @@ const signin = async (req, res) => {
         const existUser = await authModel.findOne({ email })
         if(!existUser) return res.json({ status: 404, message: 'User tidak ditemukan!' })
        
-        const isMatch = bcrypt.compare(password, existUser.password)
+        const isMatch = await bcrypt.compare(password, existUser.password)
         if(!isMatch) return res.json({ status: 401, message: 'Kata sandi salah!' })
 
         const token = jsonwebtoken.sign({ user_id: existUser.email }, 'geospasial', { expiresIn: '5h' })
