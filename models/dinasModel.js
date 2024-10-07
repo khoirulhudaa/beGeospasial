@@ -5,6 +5,14 @@ const dinasModel = new mongoose.Schema({
         type: String,
         required: true
     },
+    user_id: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
     name_dinas: {
         type: String,
         required: true
