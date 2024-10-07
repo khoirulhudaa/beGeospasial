@@ -4,7 +4,7 @@ const titleModel = require('../models/titleModel')
 
 const createDinas = async (req, res) => {
     try {
-        const { name_dinas, abbreviation } = req.body
+        const { name_dinas, abbreviation, email, user_id } = req.body
        
         const existDinas = await dinasModel.findOne({ name_dinas: { $regex: new RegExp('^' + name_dinas + '$', 'i') } });
         if(existDinas) return res.json({ status: 400, message: 'Dinas sudah ada!' })
@@ -14,6 +14,8 @@ const createDinas = async (req, res) => {
         const newdinas = new dinasModel({
             dinas_id: tokenRandom,
             name_dinas,
+            user_id,
+            email, 
             abbreviation
         })
 
